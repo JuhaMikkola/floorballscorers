@@ -26,6 +26,7 @@ players = page.css('.tableList tr')
   f.write("<head>")
   f.write("<title>Professional Floorball League Top Scorers</title>")
   f.write('<link type="text/css" rel="stylesheet" href="stylesheet.css">')
+  f.write('<meta charset="utf-8">')
   f.write("</head>")
   f.write("<body>")
 
@@ -63,43 +64,47 @@ players = page.css('.tableList tr')
         stat_value = parsed_stat
       end
 
+
       # ternary equivalent of the above if statement
       # stat_value = (parsed_stat == nil ? 0 : parsed_stat.text)
 
+      field_name = current_player.instance_variables[ column-1 ]
+      current_player.instance_variable_set( field_name, stat_value )
+
       #Take second stat value and save as Name
-      if column == 1
-        current_player.name = stat_value
-      end
+      # if column == 1
+      #   current_player.name = stat_value
+      # end
 
-      #Take third stat value and save as Team
-      if column == 2
-        current_player.team = stat_value
-      end
+      # #Take third stat value and save as Team
+      # if column == 2
+      #   current_player.team = stat_value
+      # end
 
-      #Take fourth stat value and save as GP
-      if column == 3
-        current_player.gp = stat_value
-      end
+      # #Take fourth stat value and save as GP
+      # if column == 3
+      #   current_player.gp = stat_value
+      # end
 
-      #Take firth stat value and save as G
-      if column == 4
-        current_player.g = stat_value
-      end
+      # #Take firth stat value and save as G
+      # if column == 4
+      #   current_player.g = stat_value
+      # end
 
-      #Take sixth stat value and save as A
-      if column == 5
-        current_player.a = stat_value
-      end
+      # #Take sixth stat value and save as A
+      # if column == 5
+      #   current_player.a = stat_value
+      # end
 
-      #Take seventh stat value and save as P
-      if column == 6
-        current_player.pts = stat_value
-      end
+      # #Take seventh stat value and save as P
+      # if column == 6
+      #   current_player.pts = stat_value
+      # end
 
-      #Take eighth stat value and save as PIM
-      if column == 7
-        current_player.pim = stat_value
-      end
+      # #Take eighth stat value and save as PIM
+      # if column == 7
+      #   current_player.pim = stat_value
+      # end
 
       # end of the td level (column)
     end
@@ -107,7 +112,7 @@ players = page.css('.tableList tr')
 
     stats_array << current_player
     # end of the tr level (row)
-    
+
     # we're now done gathering data at this point.
   end
 
@@ -133,9 +138,9 @@ players = page.css('.tableList tr')
 
   stats_array.each do |x|
       f.write("<tr>")
-      f.write('<th scope="row" class="column1">1</th>')
+      f.write('<th scope="row" class="column1"></th>')
       f.write("<td class='column2'>" + x.name.to_s + "</td>")
-      f.write("<td>Swedish Superleague</td>")
+      f.write("<td>SSL</td>")
       f.write("<td>" + x.team.to_s + "</td>")
       f.write("<td>" + x.gp.to_s + "</td>")
       f.write("<td>" + x.g.to_s + "</td>")
