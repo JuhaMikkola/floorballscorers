@@ -1,9 +1,10 @@
 require 'nokogiri'
 require 'open-uri'
 require 'pry'
+require 'CSV'
 
 class Player
-  attr_accessor :name, :team, :gp, :g, :a, :pts, :pim
+  attr_accessor :name, :team, :gp, :g, :a, :pts, :pim, :league
 
   def initialize
     @name = ""
@@ -12,15 +13,14 @@ class Player
     @g = 0
     @a = 0
     @pts = 0
-    @pim = 0    
+    @pim = 0
+    @league = "SSL"
   end
 end
 
 File.open('floorballscorers.html', 'w') do |f|
 page = Nokogiri::HTML(open("http://www.innebandy.se/templates/IDA/TopScorersList.aspx?PageId=8811&CompetitionID=16922&epslanguage=en"))
-# players = page.css('div.tableContainer td')
 players = page.css('.tableList tr')
-
 
   f.write("<html>")
   f.write("<head>")
@@ -117,7 +117,7 @@ players = page.css('.tableList tr')
   end
 
   f.write("<table>")
-  f.write("<caption>Floorball Top Scorers</caption>")
+  f.write("<caption>Global Top Scorers List</caption>")
 
   f.write("<thead>")
 
@@ -140,7 +140,7 @@ players = page.css('.tableList tr')
       f.write("<tr>")
       f.write('<th scope="row" class="column1"></th>')
       f.write("<td class='column2'>" + x.name.to_s + "</td>")
-      f.write("<td>SSL</td>")
+      f.write("<td>" + x.league.to_s + "</td>")
       f.write("<td>" + x.team.to_s + "</td>")
       f.write("<td>" + x.gp.to_s + "</td>")
       f.write("<td>" + x.g.to_s + "</td>")
